@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using SQLIA.Model;
 using gudusoft.gsqlparser;
 using gudusoft.gsqlparser.Units;
-using antiSQLInjection;
 
 namespace SQLIA.Scanner
 {
