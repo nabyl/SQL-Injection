@@ -1,0 +1,70 @@
+﻿@{
+    ViewBag.Title = "Scan";
+}
+
+<h2>Scan</h2>
+
+<section class="well" style="padding-top:5px;">
+    <h3>Sample sheet</h3>
+    <p>Please download the sheet below for entering data for scanning. </p>
+   
+
+    <a href="@Url.Action("DownloadSample", "Injections", new { })" target="_top">download sample sheet for data entry</a>
+</section>
+<section class="clearfix" style="padding: 20px; background-color:#f5f5f5">
+
+    @foreach (var type in SQLIA.Model.AttackTypeHelper.GetAttackTypes())
+    {
+        <div class="col-lg-3">
+            @if (type.Implemented)
+            {
+                <i class="glyphicon glyphicon-ok-sign text-primary"></i>
+            }
+            else
+            {
+                <i style="color:#c7c7c7" class="glyphicon glyphicon-ok-sign "></i>
+            }
+            @type.Name
+        </div>
+    }
+
+</section>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<br />
+<section style="padding: 15px 20px; background-color:#f5f5f5">
+    <h3>Run a scan</h3>
+
+    @Html.Partial("_UploadFileForScanning", new SQLIA.Web.Models.UploadForScanView())
+
+</section>
+
+<section style="padding: 15px 20px;margin-top:20px; background-color:#f5f5f5">
+    <h3>Scan History</h3>
+
+    @{
+        Html.RenderAction("ListScanHistory", "Injections");
+    }
+
+</section>

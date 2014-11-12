@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="b46f34c9faf64a10908f50aab6c5f555" Name="Diagram1">
+        <EntityTypeShape EntityType="SQLLiteralsModel.AttackType" Width="1.5" PointX="0.75" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SQLLiteralsModel.Literal" Width="1.5" PointX="4.75" PointY="1.375" IsExpanded="true" />
+        <EntityTypeShape EntityType="SQLLiteralsModel.LiteralsAttackType" Width="1.5" PointX="1.125" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SQLLiteralsModel.ScanEntry" Width="1.5" PointX="0.75" PointY="6.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="SQLLiteralsModel.ScanEntryPossibleAttackType" Width="1.5" PointX="3" PointY="3.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="SQLLiteralsModel.Scan" Width="1.5" PointX="1.5" PointY="10" IsExpanded="true" />
+        <AssociationConnector Association="SQLLiteralsModel.FK_LiteralsAttackTypes_AttackTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SQLLiteralsModel.FK_ScanEntryPossibleAttackTypes_AttackTypes" ManuallyRouted="false" />
+        <AssociationConnector Association="SQLLiteralsModel.FK_LiteralsAttackTypes_Literals" ManuallyRouted="false" />
+        <AssociationConnector Association="SQLLiteralsModel.FK_ScanEntries_Scans" ManuallyRouted="false" />
+        <AssociationConnector Association="SQLLiteralsModel.FK_ScanEntryPossibleAttackTypes_ScanEntries" ManuallyRouted="false" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

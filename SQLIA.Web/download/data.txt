@@ -1,0 +1,100 @@
+SELECT * FROM members WHERE username = 'admin' or 1=3--,1
+SELECT * FROM members WHERE username = 'administrator' or 1^0--,1
+SELECT * FROM members WHERE username = 'admin' or 1<2,1
+SELECT * FROM members WHERE username = 'admin' or 'a'<'b',1
+SELECT * FROM members WHERE username = 'admin' or 1<=2,1
+SELECT * FROM members WHERE username = 'admin' or 'a'<='b',1
+SELECT * FROM members WHERE username = 'admin' or 'b'>='a',1
+SELECT * FROM members WHERE username = 'admin' or 0x2>0x1,1
+SELECT * FROM members WHERE username = 'admin' or 0x2!=0x1--,1
+SELECT * FROM members WHERE username = 'admin' || 0x1<0x2,1
+SELECT * FROM members WHERE username = 'admin' || 2!=1--,1
+SELECT * FROM members WHERE username = 'admin' || 'a'!='b'--,1
+SELECT * FROM members WHERE username = 'admin' || 2 IN (1,2,3,4)#,1
+SELECT * FROM members WHERE username = 'admin' or 1x4 IN (0x1,0x2)#,1
+SELECT * FROM members WHERE username = 'admin' or 'b' IN ('a','b')#,1
+SELECT * FROM members WHERE username = 'admin' or 2 NOT IN (1,3,4)#,1
+SELECT * FROM members WHERE username = 'admin' or 'b' NOT IN ('a')#,1
+SELECT * FROM members WHERE username = 'admin' or 0x2 NOT IN (0x3)#,1
+SELECT * FROM members WHERE username = 'admin' or 1 between 0 and 2--,1
+SELECT * FROM members WHERE username = 'admin' or 0x2 between 0x1 and 0xF--,1
+SELECT * FROM members WHERE username = 'admin' or 'admin'=ANY(SELECT username from members)--,1
+SELECT * FROM members WHERE username = 'admin' or 'admin'=SOME(SELECT username from members)--,1
+SELECT * FROM members WHERE username = 'admin' or 'admin'=ALL(SELECT username from members where username='admin')--,1
+SELECT * FROM members WHERE username = 'admin' or 'd' not between 'a' and 'c'--,1
+SELECT * FROM members WHERE username = 'admin' or 3 not between 0 and 2--,1
+SELECT * FROM members WHERE username = 'admin' or 0x22 not between 0x1 and 0xF--,1
+SELECT * FROM members WHERE username = 'admin' or "hacker" like "hack%"--,1
+SELECT * from Customer where ID=1 OR "hacker" like concat("hac","ker"),1
+SELECT * FROM members WHERE username = 'admin' or 'hello' like 'hello',1
+SELECT * FROM members WHERE username = 'admin' or 'hello' not like 'hi',1
+SELECT user_accounts FROM users where login='' and pin= convert(int,(select top 1 sys_name from sysobjects where user_type='u'),1
+Select item from shopping_cart where typeId=1 union all select password from user,1
+Select name from users UNION ALL SELECT LOAD_FILE('/etc/passwd'),1
+SELECT * FROM users WHERE userId = '111' UNION SELECT creditCardNumber from CreditCardTable WHERE userId='admin'—' AND password = 'abc';,1
+SELECT id,type,description,price FROM products WHERE id = 12 UNION SELECT NULL,system_user,NULL,NULL,1
+SELECT title, body FROM posts WHERE postId = 123; DROP TABLE members;--,1
+SELECT title, body FROM posts WHERE postId = 123; D/**/ROP/**/TABLE members;--,1
+Select accounts from users where login='doe' AND pass=' '; select * from users;,1
+Select name,BENCHMARK(5500) from members,1
+select age,sleep(20) from users,1
+SELECT BENCHMARK(1000000,MD5(CHAR(116))),1
+Select @@VERSION,1
+SELECT name FROM members WHERE userId='111' and '1 = 0' --' AND password = SELECT name FROM members WHERE id='111' AND '1 = 1' -' AND password = '';,1
+SELECT id,name from example_innodb where id=1 OR hex('1')<=hex('2'),1
+Select * from members where id=1 OR 'ABC' = concat(conv(10,10,36),conv(11,10,36),conv(12,10,36)),1
+Select * from members where id=1 OR 'abc' = char(97,98,99),1
+Select * from members where id=1 OR ascii('a') = 97,1
+Select * from members where id=1 OR ceil(pi())=4,1
+Select * from members where id=1 OR floor(pi()*pi()+pi())=13,1
+SELSELECTECT uid FROM tblusers WHERE username = 'jimmy' AND password = 'siWqx' OR 1=1,1
+INSERT INTO student (id, name, age) VALUES ('1', 'alan', 28);,0
+SELECT * FROM student;,0
+SELECT * FROM student ORDER BY age;,0
+SELECT COUNT(1) FROM student;,0
+SELECT COUNT(*) FROM student;,0
+SELECT id , name , MAX(age) FROM student;,0
+SELECT sum(age)FROM student;,0
+DELETE FROM student WHERE name = 'alan';,0
+SELECT * FROM student WHERE name LIKE 'd%n';,0
+SELECT * FROM student WHERE name = 'dan';,0
+SELECT * FROM student WHERE name = 'dan' AND age = 24;,0
+SELECT name FROM student WHERE age > 25;,0
+SELECT name , age FROM student;,0
+SELECT ID, NAME, AMOUNT, DATE FROM CUSTOMERS LEFT JOIN ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID UNION SELECT  ID, NAME, AMOUNT, DATE FROM CUSTOMERS RIGHT JOIN ORDERS ON CUSTOMERS.ID = ORDERS.CUSTOMER_ID;,0
+SELECT * FROM Employees,0
+SELECT EmployeeID, FirstName, LastName, HireDate, City FROM Employees,0
+SELECT EmployeeID, FirstName, LastName, HireDate, City FROM Employees WHERE City = 'London',0
+SELECT EmployeeID, FirstName, LastName, HireDate, City FROM Employees WHERE HireDate >= '1-july-1993',0
+SELECT EmployeeID, FirstName, LastName, HireDate, City FROM Employees WHERE (HireDate >= '1-june-1992') AND (HireDate <= '15-december-1993'),0
+SELECT EmployeeID, FirstName, LastName, HireDate, City FROM Employees WHERE City = 'London' OR City = 'Seattle',0
+SELECT EmployeeID, FirstName, LastName, HireDate, City FROM Employees WHERE (FirstName NOT LIKE 'M%') AND (FirstName NOT LIKE 'A%'),0
+SELECT * FROM car;,0
+SELECT * FROM car WHERE modelid = 501;,0
+SELECT car.* FROM car, carmodel WHERE car.modelid = carmodel.modelid AND model = 'Accord';,0
+SELECT AVG(car.mileage) FROM car, carmodel WHERE car.modelid = carmodel.modelid AND carmodel.model = 'Accord';,0
+select distinct customer.customer_name, customer_city from borrower, customer where borrower.customer_name = customer.customer_name;,0
+select distinct C.customer_name, customer_city from customer C, borrower B, loan L where C.customer_name = B.customer_name and B.loan_number = L.loan_number and branch_name = 'Perryridge';,0
+select account_number from account where balance between 700 and 900;,0
+select customer_name from customer where customer_street like '%Hill';,0
+select distinct customer_name from borrower, loan where borrower.loan_number = loan.loan_number and branch_name = 'Perryridge' and customer_name in (select customer_name from account, depositor where account.account_number = depositor.account_number and branch_name = 'Perryridge');,0
+select branch_name, avg(balance) from account group by branch_name;,0
+select branch_name from account group by branch_name having avg(balance) >= all(select avg(balance) from account group by branch_name);,0
+SELECT Employee.Name, Employee.Salary FROM   Employee, Pilot WHERE  Employee.Emp_No = Pilot.Emp_No AND (Employee.Salary BETWEEN 40000 AND 55000) ORDER BY Employee.Salary;,0
+SELECT Employee.Name, Employee.Salary FROM   Employee WHERE  Employee.Salary > ALL (SELECT Employee.Salary FROM   Employee WHERE  Employee.Emp_No NOT IN (SELECT Emp_No FROM   Pilot)),0
+SELECT Flight.Num, Flight.Origin, COUNT(Booked_On.Name) FROM   Flight, Booked_On WHERE  Flight.Num = Booked_On.Num AND Flight.Dest = 'MIA' GROUP BY Flight.Num, Flight.Origin HAVING COUNT(Booked_On.Name) > 3;,0
+SELECT * FROM customer ORDER BY customer_name;,0
+SELECT * FROM account ORDER BY balance DESC;,0
+SELECT branch_name FROM branch HAVING MAX(assets);,0
+SELECT AVG(balance) FROM account;,0
+SELECT COUNT(branch_name) FROM branch;,0
+SELECT AVG(balance)  FROM account WHERE branch_name IN (SELECT branch_name FROM branch WHERE branch_city = "horseneck");  ,0
+SELECT COUNT(branch_name), branch_city FROM branch GROUP BY branch_city;,0
+SELECT branch_city, AVG(assets) FROM branch GROUP BY branch_city HAVING AVG(assets) > 2500000;,0
+SELECT customer_street FROM customer WHERE customer_name IN (SELECT customer_name FROM depositor WHERE account_number = "A-102");,0
+SELECT branch_city  FROM branch  WHERE branch_name IN (SELECT branch_name FROM account WHERE account_number = "A-102");,0
+SELECT account_number FROM account WHERE branch_name NOT IN (SELECT branch_name FROM branch WHERE branch_city = "Horseneck" OR branch_city = "Brooklyn");,0
+SELECT account_number FROM account WHERE branch_name <> ALL(SELECT branch_name FROM branch WHERE branch_city = "Horseneck" OR branch_city = "Brooklyn");,0
+SELECT branch_name, assets FROM branch WHERE assets >= ALL (SELECT assets FROM branch);,0
+SELECT branch_name FROM branch WHERE assets > SOME (SELECT assets FROM branch WHERE branch_city = "brooklyn");,0
+UPDATE customer SET customer_street = "Riverdale", customer_city = "Maryland" WHERE customer_name = "Johnson";,0

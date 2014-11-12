@@ -1,0 +1,185 @@
+﻿@model SQLIA.Model.Scan
+@{
+    ViewBag.Title = "Scan Results";
+
+    string pSpecifier = String.Format("{0}{1}", "0.0", 0);
+}
+
+@Html.ActionLink("Back to scan page", "Scan", "Injections")
+
+<h2>Scan Results</h2>
+
+@if (Model != null)
+{
+    <p> Scan run on: @Model.Date.ToString("dd-MMMM-yyyy hh:mm tt") </p>
+    <hr />
+    <section class="clearfix" style="padding:15px;background-color:#f7f7f7;margin-bottom:60px">
+        <div class="row col-lg-12 clearfix" style="margin-bottom:20px">
+            <div class="col-md-6 info" style="margin-bottom:20px">
+                <div class="col-lg-6 col-md-6">
+                    <label class="">Benign Statements</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Html.DisplayFor(model => model.TotalBenign)
+                </div>
+            </div>
+
+            <div class="col-md-6" style="margin-bottom:20px">
+                <div class="col-lg-6 col-md-6">
+                    <label>Malicious Statements</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Html.DisplayFor(model => model.TotalMalicious)
+                </div>
+            </div>
+
+            <div class="col-md-6">
+                <div class="col-lg-6 col-md-6">
+                    <label>True Positive</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Html.DisplayFor(model => model.TruePositive)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-lg-6 col-md-6">
+                    <label>True Negative</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Html.DisplayFor(model => model.TrueNegative)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-lg-6 col-md-6">
+                    <label>False Positive</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Html.DisplayFor(model => model.FalsePositive)
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-lg-6 col-md-6">
+                    <label>False Negative</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Html.DisplayFor(model => model.FalseNegative)
+                </div>
+            </div>
+         
+        </div>
+        <div class="row col-lg-12 clearfix">
+
+            <div class="col-md-6">
+                <div class="col-lg-6 col-md-6">
+                    <label>Detection Rate</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Model.DetectionRate.ToString(pSpecifier) <span style="font-size:11px">%</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-lg-6 col-md-6">
+                    <label>Detection Accuracy</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                     @Model.DetectionAccuracy.ToString(pSpecifier) <span style="font-size:11px">%</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-lg-6 col-md-6">
+                    <label>False Positive Rate</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Model.FalsePositiveRate.ToString(pSpecifier) <span style="font-size:11px">%</span>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="col-lg-6 col-md-6">
+                    <label>False Negative Rate</label>
+                </div>
+                <div class="col-lg-6 col-md-6">
+                    @Model.FalseNegativeRate.ToString(pSpecifier) <span style="font-size:11px">%</span>
+                </div>
+            </div>
+        </div>
+
+    </section>
+
+    <p style="font-size:small">Please note that the statements are validated only by a mysql parser.</p>
+
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">SQL Injection evaluations</div>
+
+
+
+
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th>
+                        sql statement
+                    </th>
+                    <th>
+                        actual possibility
+                    </th>
+                    <th>
+                        scan result
+                    </th>
+                    <th colspan="2">
+                       evaluation
+                    </th>
+
+                </tr>
+            </thead>
+            @foreach (var scanEntry in Model.ScanEntries)
+            {
+                <tr class="@(scanEntry.InjectionAttackPossible == true && scanEntry.InjectionAttackPossible== true ? "success" :"")  @((scanEntry.InjectionAttackPossible == false && scanEntry.ActualPossiblity) ? "danger" : "") @(scanEntry.InjectionAttackPossible && scanEntry.ActualPossiblity == false ? " info " : "")  @(scanEntry.InjectionAttackPossible == false && scanEntry.ActualPossiblity == false ? "success" : "")">
+                    <td>
+                        @Html.DisplayTextFor(item => scanEntry.Content)
+                    </td>
+                    <td>
+                        @if (scanEntry.ActualPossiblity)
+                        {
+                            <span>yes</span>
+                        }
+                        else
+                        {
+                            <span>no</span>
+                        }
+                    </td>
+
+
+
+                    <td>
+                        @if (scanEntry.InjectionAttackPossible)
+                        {
+                            <span>yes</span>
+                        }
+                        else
+                        {
+                            <span>no</span>
+                        }
+                    </td>
+                    <td class="col-lg-2">
+                        @Html.Raw(scanEntry.Description) <br /><br />
+                       
+                    </td>
+                    <td>
+                        @foreach (var attackVector in scanEntry.ScanEntryPossibleAttackTypes)
+                        {
+                            <span class="label label-primary">@attackVector.AttackType.Name</span> <br />
+                        }
+                    </td>
+
+
+                </tr>
+            }
+        </table>
+    </div>
+    @*<p>
+            @Html.ActionLink("Edit", "Edit", new { id = Model.ScanID }) |
+            @Html.ActionLink("Back to List", "Index")
+        </p>*@
+
+}

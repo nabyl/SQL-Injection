@@ -1,0 +1,413 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="SQLLiteralsModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="AttackTypes">
+          <Key>
+            <PropertyRef Name="AttackTypeID" />
+          </Key>
+          <Property Name="AttackTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" />
+          <Property Name="Implemented" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Literals">
+          <Key>
+            <PropertyRef Name="LiteralID" />
+          </Key>
+          <Property Name="LiteralID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Word" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="LiteralsAttackTypes">
+          <Key>
+            <PropertyRef Name="LiiteralAttackTypeID" />
+          </Key>
+          <Property Name="LiiteralAttackTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LiteralID" Type="int" Nullable="false" />
+          <Property Name="AttackTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScanEntries">
+          <Key>
+            <PropertyRef Name="ScanEntryID" />
+          </Key>
+          <Property Name="ScanEntryID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Content" Type="nvarchar(max)" />
+          <Property Name="InjectionAttackPossible" Type="bit" Nullable="false" />
+          <Property Name="ActualPossiblity" Type="bit" Nullable="false" />
+          <Property Name="ScanID" Type="int" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScanEntryPossibleAttackTypes">
+          <Key>
+            <PropertyRef Name="ScanEntryPossibleAttackTypeID" />
+          </Key>
+          <Property Name="ScanEntryPossibleAttackTypeID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ScanEntryID" Type="int" Nullable="false" />
+          <Property Name="AttackTypeID" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Scans">
+          <Key>
+            <PropertyRef Name="ScanID" />
+          </Key>
+          <Property Name="ScanID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="TotalBenign" Type="int" Nullable="false" />
+          <Property Name="TotalMalicious" Type="int" Nullable="false" />
+          <Property Name="TruePositive" Type="int" Nullable="false" />
+          <Property Name="TrueNegative" Type="int" Nullable="false" />
+          <Property Name="FalsePositive" Type="int" Nullable="false" />
+          <Property Name="FalseNegative" Type="int" Nullable="false" />
+          <Property Name="DetectionRate" Type="float" Nullable="false" />
+          <Property Name="DetectionAccuracy" Type="float" Nullable="false" />
+          <Property Name="FalsePositiveRate" Type="float" Nullable="false" />
+          <Property Name="FalseNegativeRate" Type="float" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_LiteralsAttackTypes_AttackTypes">
+          <End Role="AttackTypes" Type="Self.AttackTypes" Multiplicity="1" />
+          <End Role="LiteralsAttackTypes" Type="Self.LiteralsAttackTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttackTypes">
+              <PropertyRef Name="AttackTypeID" />
+            </Principal>
+            <Dependent Role="LiteralsAttackTypes">
+              <PropertyRef Name="AttackTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LiteralsAttackTypes_Literals">
+          <End Role="Literals" Type="Self.Literals" Multiplicity="1" />
+          <End Role="LiteralsAttackTypes" Type="Self.LiteralsAttackTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Literals">
+              <PropertyRef Name="LiteralID" />
+            </Principal>
+            <Dependent Role="LiteralsAttackTypes">
+              <PropertyRef Name="LiteralID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScanEntries_Scans">
+          <End Role="Scans" Type="Self.Scans" Multiplicity="1" />
+          <End Role="ScanEntries" Type="Self.ScanEntries" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Scans">
+              <PropertyRef Name="ScanID" />
+            </Principal>
+            <Dependent Role="ScanEntries">
+              <PropertyRef Name="ScanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScanEntryPossibleAttackTypes_AttackTypes">
+          <End Role="AttackTypes" Type="Self.AttackTypes" Multiplicity="1" />
+          <End Role="ScanEntryPossibleAttackTypes" Type="Self.ScanEntryPossibleAttackTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttackTypes">
+              <PropertyRef Name="AttackTypeID" />
+            </Principal>
+            <Dependent Role="ScanEntryPossibleAttackTypes">
+              <PropertyRef Name="AttackTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScanEntryPossibleAttackTypes_ScanEntries">
+          <End Role="ScanEntries" Type="Self.ScanEntries" Multiplicity="1" />
+          <End Role="ScanEntryPossibleAttackTypes" Type="Self.ScanEntryPossibleAttackTypes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScanEntries">
+              <PropertyRef Name="ScanEntryID" />
+            </Principal>
+            <Dependent Role="ScanEntryPossibleAttackTypes">
+              <PropertyRef Name="ScanEntryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SQLLiteralsModelStoreContainer">
+          <EntitySet Name="AttackTypes" EntityType="Self.AttackTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Literals" EntityType="Self.Literals" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="LiteralsAttackTypes" EntityType="Self.LiteralsAttackTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScanEntries" EntityType="Self.ScanEntries" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ScanEntryPossibleAttackTypes" EntityType="Self.ScanEntryPossibleAttackTypes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Scans" EntityType="Self.Scans" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_LiteralsAttackTypes_AttackTypes" Association="Self.FK_LiteralsAttackTypes_AttackTypes">
+            <End Role="AttackTypes" EntitySet="AttackTypes" />
+            <End Role="LiteralsAttackTypes" EntitySet="LiteralsAttackTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LiteralsAttackTypes_Literals" Association="Self.FK_LiteralsAttackTypes_Literals">
+            <End Role="Literals" EntitySet="Literals" />
+            <End Role="LiteralsAttackTypes" EntitySet="LiteralsAttackTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScanEntries_Scans" Association="Self.FK_ScanEntries_Scans">
+            <End Role="Scans" EntitySet="Scans" />
+            <End Role="ScanEntries" EntitySet="ScanEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScanEntryPossibleAttackTypes_AttackTypes" Association="Self.FK_ScanEntryPossibleAttackTypes_AttackTypes">
+            <End Role="AttackTypes" EntitySet="AttackTypes" />
+            <End Role="ScanEntryPossibleAttackTypes" EntitySet="ScanEntryPossibleAttackTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScanEntryPossibleAttackTypes_ScanEntries" Association="Self.FK_ScanEntryPossibleAttackTypes_ScanEntries">
+            <End Role="ScanEntries" EntitySet="ScanEntries" />
+            <End Role="ScanEntryPossibleAttackTypes" EntitySet="ScanEntryPossibleAttackTypes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="SQLLiteralsModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="AttackType">
+          <Key>
+            <PropertyRef Name="AttackTypeID" />
+          </Key>
+          <Property Name="AttackTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="500" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="LiteralsAttackTypes" Relationship="Self.FK_LiteralsAttackTypes_AttackTypes" FromRole="AttackTypes" ToRole="LiteralsAttackTypes" />
+          <NavigationProperty Name="ScanEntryPossibleAttackTypes" Relationship="Self.FK_ScanEntryPossibleAttackTypes_AttackTypes" FromRole="AttackTypes" ToRole="ScanEntryPossibleAttackTypes" />
+          <Property Name="Implemented" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Literal">
+          <Key>
+            <PropertyRef Name="LiteralID" />
+          </Key>
+          <Property Name="LiteralID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Word" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="LiteralsAttackTypes" Relationship="Self.FK_LiteralsAttackTypes_Literals" FromRole="Literals" ToRole="LiteralsAttackTypes" />
+        </EntityType>
+        <EntityType Name="LiteralsAttackType">
+          <Key>
+            <PropertyRef Name="LiiteralAttackTypeID" />
+          </Key>
+          <Property Name="LiiteralAttackTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LiteralID" Type="Int32" Nullable="false" />
+          <Property Name="AttackTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AttackType" Relationship="Self.FK_LiteralsAttackTypes_AttackTypes" FromRole="LiteralsAttackTypes" ToRole="AttackTypes" />
+          <NavigationProperty Name="Literal" Relationship="Self.FK_LiteralsAttackTypes_Literals" FromRole="LiteralsAttackTypes" ToRole="Literals" />
+        </EntityType>
+        <EntityType Name="ScanEntry">
+          <Key>
+            <PropertyRef Name="ScanEntryID" />
+          </Key>
+          <Property Name="ScanEntryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Content" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="InjectionAttackPossible" Type="Boolean" Nullable="false" />
+          <Property Name="ScanID" Type="Int32" Nullable="false" />
+          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Scan" Relationship="Self.FK_ScanEntries_Scans" FromRole="ScanEntries" ToRole="Scans" />
+          <NavigationProperty Name="ScanEntryPossibleAttackTypes" Relationship="Self.FK_ScanEntryPossibleAttackTypes_ScanEntries" FromRole="ScanEntries" ToRole="ScanEntryPossibleAttackTypes" />
+          <Property Name="ActualPossiblity" Type="Boolean" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ScanEntryPossibleAttackType">
+          <Key>
+            <PropertyRef Name="ScanEntryPossibleAttackTypeID" />
+          </Key>
+          <Property Name="ScanEntryPossibleAttackTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ScanEntryID" Type="Int32" Nullable="false" />
+          <Property Name="AttackTypeID" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AttackType" Relationship="Self.FK_ScanEntryPossibleAttackTypes_AttackTypes" FromRole="ScanEntryPossibleAttackTypes" ToRole="AttackTypes" />
+          <NavigationProperty Name="ScanEntry" Relationship="Self.FK_ScanEntryPossibleAttackTypes_ScanEntries" FromRole="ScanEntryPossibleAttackTypes" ToRole="ScanEntries" />
+        </EntityType>
+        <EntityType Name="Scan">
+          <Key>
+            <PropertyRef Name="ScanID" />
+          </Key>
+          <Property Name="ScanID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="ScanEntries" Relationship="Self.FK_ScanEntries_Scans" FromRole="Scans" ToRole="ScanEntries" />
+          <Property Name="DetectionRate" Type="Double" Nullable="false" />
+          <Property Name="DetectionAccuracy" Type="Double" Nullable="false" />
+          <Property Name="FalsePositiveRate" Type="Double" Nullable="false" />
+          <Property Name="FalseNegativeRate" Type="Double" Nullable="false" />
+          <Property Name="TotalBenign" Type="Int32" Nullable="false" />
+          <Property Name="TotalMalicious" Type="Int32" Nullable="false" />
+          <Property Name="TruePositive" Type="Int32" Nullable="false" />
+          <Property Name="TrueNegative" Type="Int32" Nullable="false" />
+          <Property Name="FalsePositive" Type="Int32" Nullable="false" />
+          <Property Name="FalseNegative" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_LiteralsAttackTypes_AttackTypes">
+          <End Role="AttackTypes" Type="Self.AttackType" Multiplicity="1" />
+          <End Role="LiteralsAttackTypes" Type="Self.LiteralsAttackType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttackTypes">
+              <PropertyRef Name="AttackTypeID" />
+            </Principal>
+            <Dependent Role="LiteralsAttackTypes">
+              <PropertyRef Name="AttackTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScanEntryPossibleAttackTypes_AttackTypes">
+          <End Role="AttackTypes" Type="Self.AttackType" Multiplicity="1" />
+          <End Role="ScanEntryPossibleAttackTypes" Type="Self.ScanEntryPossibleAttackType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="AttackTypes">
+              <PropertyRef Name="AttackTypeID" />
+            </Principal>
+            <Dependent Role="ScanEntryPossibleAttackTypes">
+              <PropertyRef Name="AttackTypeID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_LiteralsAttackTypes_Literals">
+          <End Role="Literals" Type="Self.Literal" Multiplicity="1" />
+          <End Role="LiteralsAttackTypes" Type="Self.LiteralsAttackType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Literals">
+              <PropertyRef Name="LiteralID" />
+            </Principal>
+            <Dependent Role="LiteralsAttackTypes">
+              <PropertyRef Name="LiteralID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScanEntries_Scans">
+          <End Role="Scans" Type="Self.Scan" Multiplicity="1" />
+          <End Role="ScanEntries" Type="Self.ScanEntry" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Scans">
+              <PropertyRef Name="ScanID" />
+            </Principal>
+            <Dependent Role="ScanEntries">
+              <PropertyRef Name="ScanID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ScanEntryPossibleAttackTypes_ScanEntries">
+          <End Role="ScanEntries" Type="Self.ScanEntry" Multiplicity="1" />
+          <End Role="ScanEntryPossibleAttackTypes" Type="Self.ScanEntryPossibleAttackType" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ScanEntries">
+              <PropertyRef Name="ScanEntryID" />
+            </Principal>
+            <Dependent Role="ScanEntryPossibleAttackTypes">
+              <PropertyRef Name="ScanEntryID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="SQLLiteralsEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="AttackTypes" EntityType="Self.AttackType" />
+          <EntitySet Name="Literals" EntityType="Self.Literal" />
+          <EntitySet Name="LiteralsAttackTypes" EntityType="Self.LiteralsAttackType" />
+          <EntitySet Name="ScanEntries" EntityType="Self.ScanEntry" />
+          <EntitySet Name="ScanEntryPossibleAttackTypes" EntityType="Self.ScanEntryPossibleAttackType" />
+          <EntitySet Name="Scans" EntityType="Self.Scan" />
+          <AssociationSet Name="FK_LiteralsAttackTypes_AttackTypes" Association="Self.FK_LiteralsAttackTypes_AttackTypes">
+            <End Role="AttackTypes" EntitySet="AttackTypes" />
+            <End Role="LiteralsAttackTypes" EntitySet="LiteralsAttackTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScanEntryPossibleAttackTypes_AttackTypes" Association="Self.FK_ScanEntryPossibleAttackTypes_AttackTypes">
+            <End Role="AttackTypes" EntitySet="AttackTypes" />
+            <End Role="ScanEntryPossibleAttackTypes" EntitySet="ScanEntryPossibleAttackTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_LiteralsAttackTypes_Literals" Association="Self.FK_LiteralsAttackTypes_Literals">
+            <End Role="Literals" EntitySet="Literals" />
+            <End Role="LiteralsAttackTypes" EntitySet="LiteralsAttackTypes" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScanEntries_Scans" Association="Self.FK_ScanEntries_Scans">
+            <End Role="Scans" EntitySet="Scans" />
+            <End Role="ScanEntries" EntitySet="ScanEntries" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ScanEntryPossibleAttackTypes_ScanEntries" Association="Self.FK_ScanEntryPossibleAttackTypes_ScanEntries">
+            <End Role="ScanEntries" EntitySet="ScanEntries" />
+            <End Role="ScanEntryPossibleAttackTypes" EntitySet="ScanEntryPossibleAttackTypes" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="SQLLiteralsModelStoreContainer" CdmEntityContainer="SQLLiteralsEntities">
+          <EntitySetMapping Name="AttackTypes">
+            <EntityTypeMapping TypeName="SQLLiteralsModel.AttackType">
+              <MappingFragment StoreEntitySet="AttackTypes">
+                <ScalarProperty Name="Implemented" ColumnName="Implemented" />
+                <ScalarProperty Name="AttackTypeID" ColumnName="AttackTypeID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Literals">
+            <EntityTypeMapping TypeName="SQLLiteralsModel.Literal">
+              <MappingFragment StoreEntitySet="Literals">
+                <ScalarProperty Name="LiteralID" ColumnName="LiteralID" />
+                <ScalarProperty Name="Word" ColumnName="Word" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="LiteralsAttackTypes">
+            <EntityTypeMapping TypeName="SQLLiteralsModel.LiteralsAttackType">
+              <MappingFragment StoreEntitySet="LiteralsAttackTypes">
+                <ScalarProperty Name="LiiteralAttackTypeID" ColumnName="LiiteralAttackTypeID" />
+                <ScalarProperty Name="LiteralID" ColumnName="LiteralID" />
+                <ScalarProperty Name="AttackTypeID" ColumnName="AttackTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScanEntries">
+            <EntityTypeMapping TypeName="SQLLiteralsModel.ScanEntry">
+              <MappingFragment StoreEntitySet="ScanEntries">
+                <ScalarProperty Name="ActualPossiblity" ColumnName="ActualPossiblity" />
+                <ScalarProperty Name="ScanEntryID" ColumnName="ScanEntryID" />
+                <ScalarProperty Name="Content" ColumnName="Content" />
+                <ScalarProperty Name="InjectionAttackPossible" ColumnName="InjectionAttackPossible" />
+                <ScalarProperty Name="ScanID" ColumnName="ScanID" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ScanEntryPossibleAttackTypes">
+            <EntityTypeMapping TypeName="SQLLiteralsModel.ScanEntryPossibleAttackType">
+              <MappingFragment StoreEntitySet="ScanEntryPossibleAttackTypes">
+                <ScalarProperty Name="ScanEntryPossibleAttackTypeID" ColumnName="ScanEntryPossibleAttackTypeID" />
+                <ScalarProperty Name="ScanEntryID" ColumnName="ScanEntryID" />
+                <ScalarProperty Name="AttackTypeID" ColumnName="AttackTypeID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Scans">
+            <EntityTypeMapping TypeName="SQLLiteralsModel.Scan">
+              <MappingFragment StoreEntitySet="Scans">
+                <ScalarProperty Name="FalseNegative" ColumnName="FalseNegative" />
+                <ScalarProperty Name="FalsePositive" ColumnName="FalsePositive" />
+                <ScalarProperty Name="TrueNegative" ColumnName="TrueNegative" />
+                <ScalarProperty Name="TruePositive" ColumnName="TruePositive" />
+                <ScalarProperty Name="TotalMalicious" ColumnName="TotalMalicious" />
+                <ScalarProperty Name="TotalBenign" ColumnName="TotalBenign" />
+                <ScalarProperty Name="FalseNegativeRate" ColumnName="FalseNegativeRate" />
+                <ScalarProperty Name="FalsePositiveRate" ColumnName="FalsePositiveRate" />
+                <ScalarProperty Name="DetectionAccuracy" ColumnName="DetectionAccuracy" />
+                <ScalarProperty Name="DetectionRate" ColumnName="DetectionRate" />
+                <ScalarProperty Name="ScanID" ColumnName="ScanID" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

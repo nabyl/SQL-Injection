@@ -1,0 +1,66 @@
+﻿@model IEnumerable<SQLIA.Model.Scan>
+@{
+    string pSpecifier = String.Format("{0}{1}", "0.0", 0);
+}
+@if (Model.Any())
+{
+    <table class="table">
+        <tr>
+            <th>#</th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                detection rate
+            </th>
+            <th>
+                detection accuracy
+            </th>
+            <th>
+                false positive rate
+            </th>
+            <th>
+                false negative rate
+            </th>
+            <th></th>
+        </tr>
+        @{
+    int count = 0;
+
+        }
+        @foreach (var item in Model)
+        {
+            count++;
+            <tr>
+                <td>
+                    @count
+                </td>
+                <td>
+                    @item.Date.ToString("dd-MMMM-yyyy hh:mm tt")
+                </td>
+                <td>
+                    @item.DetectionRate.ToString(pSpecifier) <span style="font-size:11px">%</span>
+                </td>
+                <td>
+                    @item.DetectionAccuracy.ToString(pSpecifier) <span style="font-size:11px">%</span>
+                   
+                </td>
+                <td>
+                    @item.FalsePositiveRate.ToString(pSpecifier) <span style="font-size:11px">%</span>
+                </td>
+                <td>
+                    @item.FalseNegativeRate.ToString(pSpecifier) <span style="font-size:11px">%</span>
+                </td>
+                <td>
+                    @Html.ActionLink("details", "ScanResult", new { id = item.ScanID })
+                </td>
+
+            </tr>
+        }
+
+    </table>
+}
+else
+{
+    <p>No scans found.</p>
+}

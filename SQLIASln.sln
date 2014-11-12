@@ -1,0 +1,56 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 2013
+VisualStudioVersion = 12.0.30723.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLIA.Web", "SQLIA.Web\SQLIA.Web.csproj", "{4B7E2832-32F5-4F40-A06A-915B1FDA9FDB}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{8B8BAFE0-190F-4D85-993F-765339B761F4}"
+	ProjectSection(SolutionItems) = preProject
+		.nuget\NuGet.Config = .nuget\NuGet.Config
+		.nuget\NuGet.exe = .nuget\NuGet.exe
+		.nuget\NuGet.targets = .nuget\NuGet.targets
+	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLIA.Model", "SQLIA.Model\SQLIA.Model.csproj", "{2E013136-D4FA-4EE0-8888-964ACA8A9DEC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SQLIA.Scanner", "SQLIA.Scanner\SQLIA.Scanner.csproj", "{99551F96-4C9D-4A3C-82A2-18E29ED8F14B}"
+EndProject
+Global
+	GlobalSection(TeamFoundationVersionControl) = preSolution
+		SccNumberOfProjects = 4
+		SccEnterpriseProvider = {4CA58AB2-18FA-4F8D-95D4-32DDF27D184C}
+		SccTeamFoundationServer = https://codemania.visualstudio.com/defaultcollection
+		SccLocalPath0 = .
+		SccProjectUniqueName1 = SQLIA.Web\\SQLIA.Web.csproj
+		SccProjectName1 = SQLIA.Web
+		SccLocalPath1 = SQLIA.Web
+		SccProjectUniqueName2 = SQLIA.Model\\SQLIA.Model.csproj
+		SccProjectName2 = SQLIA.Model
+		SccLocalPath2 = SQLIA.Model
+		SccProjectUniqueName3 = SQLIA.Scanner\\SQLIA.Scanner.csproj
+		SccProjectName3 = SQLIA.Scanner
+		SccLocalPath3 = SQLIA.Scanner
+	EndGlobalSection
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4B7E2832-32F5-4F40-A06A-915B1FDA9FDB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4B7E2832-32F5-4F40-A06A-915B1FDA9FDB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4B7E2832-32F5-4F40-A06A-915B1FDA9FDB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4B7E2832-32F5-4F40-A06A-915B1FDA9FDB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E013136-D4FA-4EE0-8888-964ACA8A9DEC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E013136-D4FA-4EE0-8888-964ACA8A9DEC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E013136-D4FA-4EE0-8888-964ACA8A9DEC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E013136-D4FA-4EE0-8888-964ACA8A9DEC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{99551F96-4C9D-4A3C-82A2-18E29ED8F14B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{99551F96-4C9D-4A3C-82A2-18E29ED8F14B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{99551F96-4C9D-4A3C-82A2-18E29ED8F14B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{99551F96-4C9D-4A3C-82A2-18E29ED8F14B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
