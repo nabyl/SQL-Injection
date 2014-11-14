@@ -16,9 +16,8 @@ namespace SQLIA.Model
             public const int OUT_OF_BAND = 4;
             public const int TIME_DELAY = 5;
             public const int STORED_PROCEDURE = 6;
-            public const int COMMENTS = 7;
             public const int PIGGY_BACK_QUERIES = 8;
-            public const int NOT_ALLOWED_QUERY = 9;
+            public const int ALTERNATIVE_ENCODING = 9; 
         }
     }
 }

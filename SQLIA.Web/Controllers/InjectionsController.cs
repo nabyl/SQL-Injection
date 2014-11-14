@@ -42,15 +42,6 @@ namespace SQLIA.Web.Controllers
                         string script = line.Substring(0, line.LastIndexOf(','));
                         string last = line.Substring(line.LastIndexOf(',') + 1);
 
-
-                        //if the last character is not ; then add 
-                        //if (script.LastIndexOf(";") < 0)
-                        //{
-                        //    script = script + ";";
-                        //}
-
-                        //script = script.ToLower();
-
                         Literal literalFound = new Literal();
 
                         // basic details

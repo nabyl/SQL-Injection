@@ -41,46 +41,7 @@ namespace SQLIA.Scanner
         /// <returns></returns>
         public void CheckInjections()
         {
-            //TAntiSQLInjection anti = new TAntiSQLInjection(TDbVendor.DbVOracle);
-
-            //String msg = "";
-            //if (anti.isInjected(this.statement))
-            //{
-            //    this.InjectionsFound = true;
-            //    msg = "SQL injected found:";
-            //    for (int i = 0; i < anti.getSqlInjections().Count; i++)
-            //    {
-            //        Messages.Add(anti.getSqlInjections()[i].getDescription());
-
-            //        if (anti.getSqlInjections()[i].getType() == ESQLInjectionType.always_true_condition || anti.getSqlInjections()[i].getType() == ESQLInjectionType.always_false_condition)
-            //        {
-            //            AttackTypes.Add(ModelConstants.AttackVectorTypes.BOOLEAN);
-            //        }
-            //        else if (anti.getSqlInjections()[i].getType() == ESQLInjectionType.syntax_error)
-            //        {
-            //            AttackTypes.Add(ModelConstants.AttackVectorTypes.ERROR_BASED);
-            //        }
-            //        else if (anti.getSqlInjections()[i].getType() == ESQLInjectionType.stacking_queries)
-            //        {
-            //            AttackTypes.Add(ModelConstants.AttackVectorTypes.PIGGY_BACK_QUERIES);
-            //        }
-            //        else if (anti.getSqlInjections()[i].getType() == ESQLInjectionType.union_set)
-            //        {
-            //            AttackTypes.Add(ModelConstants.AttackVectorTypes.UNION);
-            //        }
-            //        else if (anti.getSqlInjections()[i].getType() == ESQLInjectionType.comment_at_the_end_of_statement)
-            //        {
-            //            AttackTypes.Add(ModelConstants.AttackVectorTypes.COMMENTS);
-            //        }
-
-
-            //        //msg = msg + Environment.NewLine + ("type: " + anti.getSqlInjections()[i].getType() + ", description: " + anti.getSqlInjections()[i].getDescription());
-            //    }
-            //}
-            //else
-            //{
-            //    this.InjectionsFound = false;
-            //}
+           
             HasCommentTokens();
 
             //remove comment tokens and test all further injections
@@ -95,7 +56,7 @@ namespace SQLIA.Scanner
             HasAUnionExploitation();
             HasOutOfBandExploitation();
             HasNotAllowedTokens();
-
+            HasAlternativeEncodingTokens();
             IsValid();
 
         }
@@ -172,7 +133,7 @@ namespace SQLIA.Scanner
             {
                 this.InjectionsFound = false;
                 has = true;
-                AttackTypes.Add(ModelConstants.AttackVectorTypes.COMMENTS);
+                AttackTypes.Add(ModelConstants.AttackVectorTypes.ERROR_BASED);
 
                 if (statement.Contains("/*"))
                     Messages.Add("/* token found. ");
@@ -415,8 +376,6 @@ namespace SQLIA.Scanner
                 AttackTypes.Add(ModelConstants.AttackVectorTypes.UNION);
             }
 
-
-
             return has;
         }
 
@@ -459,7 +418,27 @@ namespace SQLIA.Scanner
                     Messages.Add(function + " token found. ");
                     has = true;
                     this.InjectionsFound = false;
-                    AttackTypes.Add(ModelConstants.AttackVectorTypes.NOT_ALLOWED_QUERY);
+                    AttackTypes.Add(ModelConstants.AttackVectorTypes.ERROR_BASED);
+                    break;
+                }
+            }
+
+            return has;
+        }
+
+        public bool HasAlternativeEncodingTokens()
+        {
+            bool has = false;
+            var sql_functions = new List<string> { "ascii", "conv", "hex" };
+
+            foreach (var function in sql_functions)
+            {
+                if (this.statement.ToLower().Contains(function))
+                {
+                    Messages.Add(function + " token found. ");
+                    has = true;
+                    this.InjectionsFound = false;
+                    AttackTypes.Add(ModelConstants.AttackVectorTypes.ALTERNATIVE_ENCODING);
                     break;
                 }
             }
